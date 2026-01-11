@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div id="setup">
+    <h1>Blackjack</h1>
+    <label>Number of rounds:</label>
+    <input type="number" id="rounds" value="3" min="1" max="10">
+    <button onclick="startGame()">Start Game</button>
+</div>
+
+<div id="game" style="display:none;">
+    <h2 id="round-info"></h2>
+
+    <div class="table">
+        <div class="hand">
+            <h3>Dealer</h3>
+            <div id="dealer-cards" class="cards"></div>
+        </div>
+
+        <div class="hand">
+            <h3>Player</h3>
+            <div id="player-cards" class="cards"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="hit()">Hit</button>
+        <button onclick="stand()">Stand</button>
+    </div>
+
+    <h2 id="result"></h2>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
