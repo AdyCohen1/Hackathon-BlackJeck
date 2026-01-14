@@ -286,6 +286,7 @@ def run_server(name):
         print("Sending request...")
         player_cards = []
         initial_cards = []
+        wins = 0
         for round_num in range(rounds):
 
             print(f"\n=== Round {round_num + 1} ===")
@@ -326,7 +327,6 @@ def run_server(name):
                 web_server.game_state["evt_start_ready"].set()
 
             round_over = False
-            wins = 0
             while not round_over:
                 decision = ask_player_decision()
                 game_socket.sendall(decision.encode())
@@ -356,6 +356,7 @@ def run_server(name):
 
                     if result != 0x0:
                         if result == 0x3:
+                            print(f"adding to win here {wins}")
                             wins += 1
                         print(result_to_string(result))
                         round_over = True
@@ -382,6 +383,7 @@ def run_server(name):
 
                         if result != 0x0:
                             if result == 0x3:
+                                print(f"adding to win here {wins}")
                                 wins += 1
                             print(result_to_string(result))
                             round_over = True
@@ -393,13 +395,13 @@ def run_server(name):
                             # -----------------------------------------
 
                             break
-            print(f"Finished playing {rounds} rounds, win rate: {(wins / rounds) * 100}%")
-            web_server.game_state["win_rate"] = wins / rounds * 100
-            try:
-                urllib.request.urlopen("http://127.0.0.1:5000/shutdown", data=b"")
+        print(f"Finished playing {rounds} rounds, win rate: {(wins / rounds) * 100}%")
+        web_server.game_state["win_rate"] = wins / rounds * 100
+        try:
+            urllib.request.urlopen("http://127.0.0.1:5000/shutdown", data=b"")
 
-            except:
-                pass
+        except:
+            pass
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
