@@ -18,7 +18,8 @@ game_state = {
     "evt_start_ready": threading.Event(),
     "evt_hit_ready": threading.Event(),
     "evt_stand_ready": threading.Event(),
-    "ui_commands": queue.Queue()
+    "ui_commands": queue.Queue(),
+    "win_rate" : -1
 }
 
 
@@ -54,6 +55,9 @@ def check_status():
         response["update"] = "stand"
         response["data"] = game_state["stand_cards"]
         game_state["evt_stand_ready"].clear()
+
+    if game_state["win_rate"] >= 0:
+        response["win_rate"] = game_state["win_rate"]
 
     return jsonify(response)
 

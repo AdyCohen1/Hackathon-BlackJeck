@@ -170,26 +170,21 @@ def run_server(name):
 
                     if not web_server.game_state["ui_commands"].empty():
                         cmd = web_server.game_state["ui_commands"].get()
-                        print(f"[Web UI] Received command: {cmd}")
                         return cmd
                 else:
                     # If this prints, your web server thread hasn't started yet
                     # print("[DEBUG] Web server flag is False")
                     pass
             except Exception as e:
-                print(f"[ERROR] Web Queue check failed: {e}")
+                pass
             # --- 2. Check Terminal ---
             if not input_queue.empty():
-                print("another one")
 
                 data = input_queue.get()
-                print(f"[DEBUG] Terminal Queue item: {data}")
 
                 source, cmd = data
                 if isinstance(cmd, str) and cmd.lower() in ["hit", "stand"]:
                     return cmd.capitalize()
-                else:
-                    print(f"[DEBUG] Ignored invalid input: '{cmd}'")
 
             time.sleep(0.1)
 
@@ -331,6 +326,7 @@ def run_server(name):
                 web_server.game_state["evt_start_ready"].set()
 
             round_over = False
+            wins = 0
             while not round_over:
                 decision = ask_player_decision()
                 game_socket.sendall(decision.encode())
@@ -359,8 +355,11 @@ def run_server(name):
                     # -----------------------
 
                     if result != 0x0:
+                        if result == 0x3:
+                            wins += 1
                         print(result_to_string(result))
                         round_over = True
+
                 else:
                     # Stand
                     web_dealer_cards = []  # Collect all dealer cards here
@@ -382,6 +381,8 @@ def run_server(name):
                         # ----------------------------
 
                         if result != 0x0:
+                            if result == 0x3:
+                                wins += 1
                             print(result_to_string(result))
                             round_over = True
 
@@ -392,9 +393,13 @@ def run_server(name):
                             # -----------------------------------------
 
                             break
+            print(f"Finished playing {rounds} rounds, win rate: {(wins / rounds) * 100}%")
+            web_server.game_state["win_rate"] = wins / rounds * 100
+            try:
+                urllib.request.urlopen("http://127.0.0.1:5000/shutdown", data=b"")
 
-
-
+            except:
+                pass
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:

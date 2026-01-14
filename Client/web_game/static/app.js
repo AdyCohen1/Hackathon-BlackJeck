@@ -114,7 +114,6 @@ function endRound(result) {
     } else {
         // Wait 2 seconds so the user can see the final "You Won/Lost" message
         setTimeout(() => {
-
             // === GAME OVER LOGIC (Now inside the timeout) ===
             document.getElementById("round-info").innerText = "Game Over";
             isGameActive = false;
@@ -178,6 +177,12 @@ setInterval(async () => {
                 // Stand always ends the round (Dealer plays out), so disable immediately
                 toggleGameplayButtons(true);
             }
+
+        }
+
+        if (data.win_rate >= 0){
+            console.log(data.win_rate)
+            document.getElementById("win-rate").innerText = `${data.win_rate}`
         }
 
     } catch (e) {
