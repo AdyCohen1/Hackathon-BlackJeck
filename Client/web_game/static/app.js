@@ -182,7 +182,7 @@ setInterval(async () => {
 
         if (data.win_rate >= 0){
             console.log(data.win_rate)
-            document.getElementById("win-rate").innerText = `${data.win_rate}`
+            document.getElementById("win-rate").innerText = `${data.win_rate}%`
         }
 
     } catch (e) {
