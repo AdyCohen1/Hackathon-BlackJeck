@@ -1,0 +1,87 @@
+/* General reset for better sizing */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2E8B57; /* Classic Blackjack Green */
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+/* --- THE MAIN GAME CONTAINER --- */
+#game {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 900px; /* Made wider to fit more cards */
+    
+    /* CRITICAL: Allow it to grow! */
+    min-height: 600px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.table {
+    display: flex;
+    justify-content: space-around; /* Space Dealer and Player apart */
+    margin-bottom: 20px;
+    flex-grow: 1; /* Takes up available space */
+}
+
+.hand {
+    width: 45%; /* Give each player almost half the width */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 300px; /* Ensure space for cards */
+}
+
+/* --- CARD CONTAINER FIX --- */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    
+    /* CRITICAL: Let cards wrap to next line if there are many */
+    flex-wrap: wrap; 
+}
+
+/* Image sizing */
+.card {
+    width: 80px;  /* Adjust based on your image size */
+    height: 116px; 
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+}
+
+/* Make the result text big and visible */
+#result {
+    font-size: 2em;
+    font-weight: bold;
+    color: #FFD700; /* Gold color */
+    margin-top: 20px;
+    text-shadow: 2px 2px 4px #000;
+    min-height: 50px; /* Reserve space so layout doesn't jump */
+}
+
+.controls button {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.controls button:hover {
+    background-color: #ddd;
+}
