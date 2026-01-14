@@ -332,7 +332,6 @@ def run_server(name):
 
             round_over = False
             while not round_over:
-                print("debug before desicon")
                 decision = ask_player_decision()
                 game_socket.sendall(decision.encode())
 
@@ -393,6 +392,8 @@ def run_server(name):
                             # -----------------------------------------
 
                             break
+
+
 
 
 if __name__ == "__main__":

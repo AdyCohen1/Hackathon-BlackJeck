@@ -1,87 +1,227 @@
-/* General reset for better sizing */
+/* General reset */
 * {
     box-sizing: border-box;
 }
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #2E8B57; /* Classic Blackjack Green */
+    /* NEW BACKGROUND: Dark Charcoal/Brown to match the casino photo background */
+    background-color: #4e8146;
     color: white;
     text-align: center;
     margin: 0;
     padding: 20px;
 }
 
-/* --- THE MAIN GAME CONTAINER --- */
+/* --- MAIN GAME CONTAINER --- */
 #game {
-    background-color: rgba(0, 0, 0, 0.3);
+    /* Slightly lighter dark box for the game area */
+    background-color: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
     padding: 20px;
     margin: 0 auto;
-    max-width: 900px; /* Made wider to fit more cards */
-    
-    /* CRITICAL: Allow it to grow! */
-    min-height: 600px; 
+
+    /* Make it wide enough to fit Left/Center/Right layout */
+    max-width: 1200px;
+    width: 95%;
+
+    min-height: 700px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid #333;
 }
 
+#round-info {
+    margin: 10px 0 20px;
+    font-size: 1.5em;
+    color: #ff0000;
+    letter-spacing: 1px;
+}
+
+/* --- THE 3-COLUMN LAYOUT --- */
 .table {
     display: flex;
-    justify-content: space-around; /* Space Dealer and Player apart */
-    margin-bottom: 20px;
-    flex-grow: 1; /* Takes up available space */
+    flex-direction: row;       /* Arrange items side-by-side */
+    justify-content: center;   /* Center them */
+    align-items: center;       /* Align vertically in the middle */
+    width: 100%;
+    gap: 20px;                 /* Space between Hands and Image */
+    flex-grow: 1;
 }
 
+/* 1. The Hands (Side Columns) */
 .hand {
-    width: 45%; /* Give each player almost half the width */
-    background-color: rgba(255, 255, 255, 0.1);
+    width: 20%;               /* Keep hands narrower */
+    min-width: 200px;         /* Don't let them get too small */
+    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    padding: 10px;
-    min-height: 300px; /* Ensure space for cards */
+    padding: 15px;
+    min-height: 400px;        /* Tall vertical area for cards */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* --- CARD CONTAINER FIX --- */
-.cards {
+.hand h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #555;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+/* 2. The Center Image Container */
+.center-stage {
+    flex-grow: 1;             /* Take up remaining space */
     display: flex;
     justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    
-    /* CRITICAL: Let cards wrap to next line if there are many */
-    flex-wrap: wrap; 
+    align-items: center;
+    max-width: 600px;         /* Limit max size of image area */
 }
 
-/* Image sizing */
+/* The Image Itself */
+#dealer-image {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    border: 4px solid #4a0e0e; /* Dark Red border to match table */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+/* --- CARDS INSIDE THE HANDS --- */
+.cards {
+    display: flex;
+    flex-wrap: wrap;         /* Allow stacking if many cards */
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding-top: 10px;
+}
+
+/* Card Images */
 .card {
-    width: 80px;  /* Adjust based on your image size */
-    height: 116px; 
-    border-radius: 5px;
+    width: 90px;
+    height: 130px;
+    border-radius: 6px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     transition: transform 0.2s;
 }
 
-/* Make the result text big and visible */
-#result {
-    font-size: 2em;
-    font-weight: bold;
-    color: #FFD700; /* Gold color */
+.card:hover {
+    transform: translateY(-5px) scale(1.05);
+}
+
+/* --- CONTROLS & RESULTS --- */
+.controls {
     margin-top: 20px;
-    text-shadow: 2px 2px 4px #000;
-    min-height: 50px; /* Reserve space so layout doesn't jump */
+    margin-bottom: 10px;
 }
 
 .controls button {
-    font-size: 1.2em;
-    padding: 10px 20px;
-    margin: 10px;
+    font-size: 1.3em;
+    padding: 15px 40px;
+    margin: 0 15px;
     cursor: pointer;
-    background-color: white;
+    background-color: #eee;
+    color: #111;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 0 #999; /* 3D effect */
+    transition: all 0.1s;
 }
 
-.controls button:hover {
-    background-color: #ddd;
+.controls button:active {
+    box-shadow: 0 2px 0 #999;
+    transform: translateY(2px);
+}
+
+.controls button:disabled {
+    background-color: #555;
+    color: #888;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#result {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #FFD700; /* Gold */
+    text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
+    min-height: 50px;
+}
+
+/* Setup Screen Styling */
+#setup {
+    background-color: #1a1a1a;
+    border: 2px solid #333;
+    padding: 50px;
+    border-radius: 15px;
+    display: inline-block;
+    margin-top: 100px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+#setup input {
+    font-size: 1.2em;
+    padding: 8px;
+    width: 80px;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    margin: 0 10px;
+}
+
+/* --- GAME OVER VIDEO OVERLAY --- */
+#game-over-overlay {
+    position: fixed;      /* Float above everything */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.95); /* Pitch black background */
+    z-index: 9999;        /* Ensure it sits on top of the game */
+
+    /* Center the video */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+#game-over-overlay h1 {
+    font-size: 4em;
+    color: #FFD700;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px red;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 5px;
+}
+
+#end-video {
+    border: 5px solid white;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+    max-width: 90%; /* Responsive for smaller screens */
+}
+
+.restart-btn {
+    margin-top: 30px;
+    padding: 15px 40px;
+    font-size: 1.5em;
+    background-color: #2E8B57;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.restart-btn:hover {
+    background-color: #3CB371;
+    transform: scale(1.1);
 }

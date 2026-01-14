@@ -18,20 +18,31 @@
     <h2 id="round-info"></h2>
 
     <div class="table">
-        <div class="hand">
+
+        <div class="hand left-side">
             <h3>Dealer</h3>
             <div id="dealer-cards" class="cards"></div>
         </div>
 
-        <div class="hand">
+        <div class="center-stage">
+            <img id="dealer-image" src="/static/pictures/casinoTable.png" alt="Dealer Table">
+        </div>
+
+        <div id="game-over-overlay" style="display: none;">
+            <video id="end-video" width="600" controls>
+                <source src="/static/pictures/exploding_finish.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="hand right-side">
             <h3>Player</h3>
             <div id="player-cards" class="cards"></div>
         </div>
     </div>
 
     <div class="controls">
-        <button onclick="hit()">Hit</button>
-        <button onclick="stand()">Stand</button>
+        <button onclick="hit()" id="hit-btn">Hit</button>
+        <button onclick="stand()" id="stand-btn">Stand</button>
     </div>
 
     <h2 id="result"></h2>

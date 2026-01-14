@@ -77,6 +77,14 @@ def initiate_game():
 def start_cmd():
     return jsonify({"status": "waiting_for_client"})
 
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    return 'Server shutting down...'
+
 
 @app.route("/hit", methods=["POST"])
 def hit_cmd():

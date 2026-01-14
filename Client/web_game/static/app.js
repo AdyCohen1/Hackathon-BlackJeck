@@ -108,13 +108,29 @@ function endRound(result) {
     document.getElementById("result").innerText = text;
 
     currentRound++;
+
     if (currentRound <= totalRounds) {
-        // Note: We don't need setTimeout here because Client.py controls the timing.
-        // Client.py will loop, send new cards, and the Watcher will catch "update: start" again.
         console.log("[Game] Waiting for next round...");
     } else {
-        document.getElementById("round-info").innerText = "Game Over";
-        isGameActive = false;
+        // Wait 2 seconds so the user can see the final "You Won/Lost" message
+        setTimeout(() => {
+
+            // === GAME OVER LOGIC (Now inside the timeout) ===
+            document.getElementById("round-info").innerText = "Game Over";
+            isGameActive = false;
+
+            // 1. Get Elements
+            const overlay = document.getElementById("game-over-overlay");
+            const video = document.getElementById("end-video");
+
+            // 2. Show the Overlay (CSS handles the centering)
+            overlay.style.display = "flex";
+
+            // 3. Play the video automatically
+            video.play().catch(e => console.log("Auto-play blocked by browser:", e));
+
+        }, 2000);
+
     }
 }
 
